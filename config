@@ -1,0 +1,33 @@
+ external_url 'https://gitlab.semge.com'
+        gitlab_rails['ldap_enabled'] = true
+        gitlab_rails['ldap_servers'] = {
+          'main' => {
+            'label' => 'GitLab AD',
+            'host' =>  '192.168.6.1',
+            'port' => 389,
+            'uid' => 'sAMAccountName',
+            'encryption' => 'simple_tls',
+            'base' => 'ou=grupos,ou=se-nti,ou=se-sub,ou=pms-semge,dc=gestao,dc=pms,dc=ad',
+            'bind_dn' => 'cn=Usuario GIT,ou=usuarios,ou=se-nti,ou=se-sub,ou=pms-semge,dc=gestao,dc=pms,dc=ad',
+            'password' => 'SEMGE-Ldap@2023#!-09',
+            'verify_certificates' => true,
+            'active_directory' => true,
+            'allow_username_or_email_login' => false,
+            'lowercase_usernames' => false,
+            'block_auto_created_users' => false,
+            'group_base' => 'cn=gitlab-g,ou=grupos,ou=se-nti,ou=se-sub,ou=pms-semge,dc=gestao,dc=pms,dc=ad',
+            'admin_group' => 'gitlab-admin-g',
+            'user_filter' => ''
+          }
+        }
+        gitlab_rails['smtp_enable'] = true
+        gitlab_rails['smtp_address'] = "smtp.office365.com"
+        gitlab_rails['smtp_port'] = 587
+        gitlab_rails['smtp_user_name'] = "username@yourdomain.com"
+        gitlab_rails['smtp_password'] = "password"
+        gitlab_rails['smtp_domain'] = "yourdomain.com"
+        gitlab_rails['smtp_authentication'] = "login"
+        gitlab_rails['smtp_enable_starttls_auto'] = true
+        gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
+        gitlab_rails['gitlab_email_from'] = 'username@yourdomain.com'
+        gitlab_rails['gitlab_email_reply_to'] = '<b>REPLY_EMAIL</b>'

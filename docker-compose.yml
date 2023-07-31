@@ -1,0 +1,40 @@
+version: "3.6"
+services:
+  gitlab:
+    image: 'gitlab/gitlab-ee:latest'
+    container_name: 'gitlab-server'
+    restart: always
+    hostname: 'gitlab.semge.com'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        gitlab_rails['ldap_enabled'] = true
+        gitlab_rails['ldap_servers'] = {
+          'main' => {
+            'label' => 'GitLab AD',
+            'host' =>  '192.168.6.1',
+            'port' => 389,
+            'uid' => 'sAMAccountName',
+            'encryption' => 'plain',
+            'base' => 'ou=grupos,ou=se-nti,ou=se-sub,ou=pms-semge,dc=gestao,dc=pms,dc=ad',
+            'bind_dn' => 'cn=Usuario GIT,ou=usuarios,ou=se-nti,ou=se-sub,ou=pms-semge,dc=gestao,dc=pms,dc=ad',
+            'password' => 'SEMGE-Ldap@2023#!-09',
+            'verify_certificates' => true,
+            'active_directory' => true,
+            'allow_username_or_email_login' => false,
+            'lowercase_usernames' => false,
+            'block_auto_created_users' => false,
+            'group_base' => 'cn=gitlab-g,ou=grupos,ou=se-nti,ou=se-sub,ou=pms-semge,dc=gestao,dc=pms,dc=ad',
+            'admin_group' => 'gitlab-admin-g',
+            'user_filter' => ''
+          }
+        }
+    ports:
+      - '81:80'
+      - '443:443'
+      - '22:22'
+      - '587:587'
+    volumes:
+      - '$GITLAB_HOME/config:/etc/gitlab'
+      - '$GITLAB_HOME/logs:/var/log/gitlab'
+      - '$GITLAB_HOME/data:/var/opt/gitlab'
+    shm_size: '256m'

@@ -1,0 +1,3 @@
+export GITLAB_HOME=/srv/gitlab
+
+docker compose up -d
